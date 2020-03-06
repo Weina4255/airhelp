@@ -1,0 +1,126 @@
+import { group, sleep } from 'k6';
+import http from 'k6/http';
+
+export let options = {
+    stages: [
+        {
+            "duration": "1m",
+            "target": 15
+        },
+        {
+            "duration": "2m",
+            "target": 15
+        },
+        {
+            "duration": "2m",
+            "target": 50
+        },
+         {
+            "duration": "5m",
+            "target": 50
+        },
+        {
+            "duration": "1m",
+            "target": 0
+        }
+    ],
+    maxRedirects: 0,
+    discardResponseBodies: true,
+};
+
+export default function() {
+
+	group("page_0 - http://localhost:8080/#/", function() {
+		let req, res;
+		req = [{
+			"method": "get",
+			"url": "http://localhost:8080/api/select/statuses",
+			"params": {
+				"headers": {
+					"Accept": "application/json, text/plain, */*",
+					"Sec-Fetch-Dest": "empty",
+					"X-Requested-With": "XMLHttpRequest",
+					"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"
+				}
+			}
+		},{
+			"method": "get",
+			"url": "http://localhost:8080/api/orders/?page=0&size=10",
+			"params": {
+				"headers": {
+					"Accept": "application/json, text/plain, */*",
+					"Sec-Fetch-Dest": "empty",
+					"X-Requested-With": "XMLHttpRequest",
+					"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"
+				}
+			}
+		}];
+		res = http.batch(req);
+		sleep(3.84);
+		req = [{
+			"method": "get",
+			"url": "http://localhost:8080/api/select/products",
+			"params": {
+				"headers": {
+					"Accept": "application/json, text/plain, */*",
+					"Sec-Fetch-Dest": "empty",
+					"X-Requested-With": "XMLHttpRequest",
+					"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"
+				}
+			}
+		},{
+			"method": "get",
+			"url": "http://localhost:8080/api/select/clients",
+			"params": {
+				"headers": {
+					"Accept": "application/json, text/plain, */*",
+					"Sec-Fetch-Dest": "empty",
+					"X-Requested-With": "XMLHttpRequest",
+					"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"
+				}
+			}
+		}];
+		res = http.batch(req);
+		sleep(33.00);
+		req = [{
+			"method": "post",
+			"url": "http://localhost:8080/api/orders/",
+			"body": "{\"status\":\"DRAFT\",\"orderDate\":\"2020-03-05 21:48:32\",\"items\":[{\"id\":0,\"isEditing\":false,\"product\":{\"id\":\"5e60cdf82732740d704609a3\",\"name\":\"Testowy produkt 2\"},\"quantity\":1},{\"id\":1,\"isEditing\":false,\"product\":{\"id\":\"5e60cdf82732740d704609a6\",\"name\":\"Testowy produkt 5\"},\"quantity\":1}]}",
+			"params": {
+				"headers": {
+					"Accept": "application/json, text/plain, */*",
+					"Sec-Fetch-Dest": "empty",
+					"X-Requested-With": "XMLHttpRequest",
+					"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36",
+					"Content-Type": "application/json;charset=UTF-8"
+				}
+			}
+		},{
+			"method": "get",
+			"url": "http://localhost:8080/api/select/statuses",
+			"params": {
+				"headers": {
+					"Accept": "application/json, text/plain, */*",
+					"Sec-Fetch-Dest": "empty",
+					"X-Requested-With": "XMLHttpRequest",
+					"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"
+				}
+			}
+		},{
+			"method": "get",
+			"url": "http://localhost:8080/api/orders/?page=0&size=10",
+			"params": {
+				"headers": {
+					"Accept": "application/json, text/plain, */*",
+					"Sec-Fetch-Dest": "empty",
+					"X-Requested-With": "XMLHttpRequest",
+					"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"
+				}
+			}
+		}];
+		res = http.batch(req);
+		// Random sleep between 5s and 10s
+		sleep(Math.floor(Math.random()*5+5));
+	});
+
+}

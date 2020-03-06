@@ -1,0 +1,164 @@
+import { group, sleep } from 'k6';
+import http from 'k6/http';
+
+
+export let options = {
+     stages: [
+        {
+            "duration": "1m",
+            "target": 15
+        },
+        {
+            "duration": "2m",
+            "target": 15
+        },
+        {
+            "duration": "2m",
+            "target": 50
+        },
+         {
+            "duration": "5m",
+            "target": 50
+        },
+        {
+            "duration": "1m",
+            "target": 0
+        }
+    ],
+    maxRedirects: 0,
+    discardResponseBodies: true,
+};
+
+export default function() {
+
+	group("page_0 - http://localhost:8080/#/login", function() {
+		let req, res;
+		req = [{
+			"method": "post",
+			"url": "http://localhost:8080/login",
+			"body": "password=test&username=employee",
+			"params": {"id":"5e60cdf82732740d70460991","username":"employee","lastName":"Test","firstName":"Employee","street":null,"homeNo":0,"flatNo":0,"city":null,"zipCode":0,"role":"EMPLOYEE",
+				"headers": {
+					"Accept": "application/json, text/plain, */*",
+					"Sec-Fetch-Dest": "empty",
+					"X-Requested-With": "XMLHttpRequest",
+					"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36",
+					"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+				}
+			}
+		}];
+		res = http.batch(req);
+		sleep(4.88);
+		req = [{
+			"method": "get",
+			"url": "http://localhost:8080/api/select/statuses",
+			"params":{"id":"DRAFT","name":"Robocze"},{"id":"ACCEPTED","name":"Zaakceptowane"},{"id":"SEND_TO_PACKING","name":"Wysłane do pakowania"},{"id":"DELIVERY","name":"Dowóz"},{"id":"COMPLETED","name":"Zakończone"},{"id":"CANCELED","name":"Anulowane"},
+					"Accept": "application/json, text/plain, */*",
+					"Sec-Fetch-Dest": "empty",
+					"X-Requested-With": "XMLHttpRequest",
+					"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"
+				}
+			}
+		},{
+			"method": "get",
+			"url": "http://localhost:8080/api/orders/?page=0&size=10",
+			"params": {"id":"5e60cdf82732740d704609a7","items":[{"product":{"id":"5e60cdf82732740d704609a2","name":"Testowy produkt 1","category":{"id":"5e60cdf82732740d70460993","name":"Test 1"},"company":"TEST","description":null,"price":1.0,"expirationDate":null},"quantity":10},{"product":{"id":"5e60cdf82732740d704609a3","name":"Testowy produkt 2","category":{"id":"5e60cdf82732740d70460993","name":"Test 1"},"company":"TEST","description":null,"price":2.0,"expirationDate":null},"quantity":17}],"client":{"id":"5e60cdf82732740d70460990","username":"client","lastName":"Test 1","firstName":"Client","street":null,"homeNo":0,"flatNo":0,"city":null,"zipCode":0,"role":"CLIENT"},"orderDate":"2020-03-05 11:01:28","completeDate":null,"status":"ACCEPTED"},{"id":"5e60cdf82732740d704609a8","items":[{"product":{"id":"5e60cdf82732740d704609a4","name":"Testowy produkt 3","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":4.0,"expirationDate":null},"quantity":1},{"product":{"id":"5e60cdf82732740d704609a5","name":"Testowy produkt 4","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":8.0,"expirationDate":null},"quantity":10},{"product":{"id":"5e60cdf82732740d704609a6","name":"Testowy produkt 5","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":16.0,"expirationDate":null},"quantity":100}],"client":{"id":"5e60cdf82732740d70460990","username":"client","lastName":"Test 1","firstName":"Client","street":null,"homeNo":0,"flatNo":0,"city":null,"zipCode":0,"role":"CLIENT"},"orderDate":"2020-03-05 11:01:28","completeDate":null,"status":"ACCEPTED"},{"id":"5e60cdf82732740d704609a9","items":[{"product":{"id":"5e60cdf82732740d704609a2","name":"Testowy produkt 1","category":{"id":"5e60cdf82732740d70460993","name":"Test 1"},"company":"TEST","description":null,"price":1.0,"expirationDate":null},"quantity":1},{"product":{"id":"5e60cdf82732740d704609a4","name":"Testowy produkt 3","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":4.0,"expirationDate":null},"quantity":3},{"product":{"id":"5e60cdf82732740d704609a6","name":"Testowy produkt 5","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":16.0,"expirationDate":null},"quantity":5}],"client":{"id":"5e60cdf82732740d70460990","username":"client","lastName":"Test 1","firstName":"Client","street":null,"homeNo":0,"flatNo":0,"city":null,"zipCode":0,"role":"CLIENT"},"orderDate":"2020-03-05 11:01:28","completeDate":null,"status":"ACCEPTED"},{"id":"5e6113de2732740d704609aa","items":[{"product":{"id":"5e60cdf82732740d704609a4","name":"Testowy produkt 3","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":4.0,"expirationDate":null},"quantity":1},{"product":{"id":"5e60cdf82732740d704609a5","name":"Testowy produkt 4","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":8.0,"expirationDate":null},"quantity":1}],"client":{"id":"5e60cdf82732740d70460990","username":"client","lastName":"Test 1","firstName":"Client","street":null,"homeNo":0,"flatNo":0,"city":null,"zipCode":0,"role":"CLIENT"},"orderDate":"2020-03-05 15:59:42","completeDate":null,"status":"ACCEPTED"},{"id":"5e6114fa2732740d704609ab","items":[{"product":{"id":"5e60cdf82732740d704609a6","name":"Testowy produkt 5","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":16.0,"expirationDate":null},"quantity":1},{"product":{"id":"5e60cdf82732740d704609a6","name":"Testowy produkt 5","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":16.0,"expirationDate":null},"quantity":1}],"client":{"id":"5e60cdf82732740d70460990","username":"client","lastName":"Test 1","firstName":"Client","street":null,"homeNo":0,"flatNo":0,"city":null,"zipCode":0,"role":"CLIENT"},"orderDate":"2020-03-05 16:04:26","completeDate":null,"status":"DELIVERY"},{"id":"5e6165c12732740d704609ac","items":[{"product":{"id":"5e60cdf82732740d704609a3","name":"Testowy produkt 2","category":{"id":"5e60cdf82732740d70460993","name":"Test 1"},"company":"TEST","description":null,"price":2.0,"expirationDate":null},"quantity":1},{"product":{"id":"5e60cdf82732740d704609a6","name":"Testowy produkt 5","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":16.0,"expirationDate":null},"quantity":1}],"client":{"id":"5e60cdf82732740d70460990","username":"client","lastName":"Test 1","firstName":"Client","street":null,"homeNo":0,"flatNo":0,"city":null,"zipCode":0,"role":"CLIENT"},"orderDate":"2020-03-05 21:49:05","completeDate":null,"status":"DRAFT"}],"totalElements":6,"totalPages":1,"last":true,"size":10,"number":0,"sort":null,"first":true,"numberOfElements":6},
+				"headers": {
+					"Accept": "application/json, text/plain, */*",
+					"Sec-Fetch-Dest": "empty",
+					"X-Requested-With": "XMLHttpRequest",
+					"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"
+				}
+			}
+		}];
+		res = http.batch(req);
+		sleep(3.91);
+		req = [{
+			"method": "get",
+			"url": "http://localhost:8080/api/orders/5e60cdf82732740d704609a9/statuses",
+			"params": {[{"id":"DRAFT","name":"Robocze"},{"id":"ACCEPTED","name":"Zaakceptowane"},{"id":"SEND_TO_PACKING","name":"Wysłane do pakowania"},{"id":"DELIVERY","name":"Dowóz"},{"id":"COMPLETED","name":"Zakończone"},{"id":"CANCELED","name":"Anulowane"}]
+				"headers": {
+					"Accept": "application/json, text/plain, */*",
+					"Sec-Fetch-Dest": "empty",
+					"X-Requested-With": "XMLHttpRequest",
+					"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"
+				}
+			}
+		},{
+			"method": "get",
+			"url": "http://localhost:8080/api/select/products",
+			"params": {[{"id":"DRAFT","name":"Robocze"},{"id":"ACCEPTED","name":"Zaakceptowane"},{"id":"SEND_TO_PACKING","name":"Wysłane do pakowania"},{"id":"DELIVERY","name":"Dowóz"},{"id":"COMPLETED","name":"Zakończone"},{"id":"CANCELED","name":"Anulowane"}]
+				"headers": {[{"id":"5e60cdf82732740d704609a2","name":"Testowy produkt 1"},{"id":"5e60cdf82732740d704609a3","name":"Testowy produkt 2"},{"id":"5e60cdf82732740d704609a4","name":"Testowy produkt 3"},{"id":"5e60cdf82732740d704609a5","name":"Testowy produkt 4"},{"id":"5e60cdf82732740d704609a6","name":"Testowy produkt 5"}]
+					"Accept": "application/json, text/plain, */*",
+					"Sec-Fetch-Dest": "empty",
+					"X-Requested-With": "XMLHttpRequest",
+					"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"
+				}
+			}
+		},{
+			"method": "get",
+			"url": "http://localhost:8080/api/select/clients",
+			"params": {[{"id":"5e60cdf82732740d70460990","name":"Client Test 1"}]
+				"headers": {
+					"Accept": "application/json, text/plain, */*",
+					"Sec-Fetch-Dest": "empty",
+					"X-Requested-With": "XMLHttpRequest",
+					"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"
+				}
+			}
+		},{
+			"method": "get",
+			"url": "http://localhost:8080/api/orders/5e60cdf82732740d704609a9",
+			"params": {[{"id":"DRAFT","name":"Robocze"},{"id":"ACCEPTED","name":"Zaakceptowane"},{"id":"SEND_TO_PACKING","name":"Wysłane do pakowania"},{"id":"DELIVERY","name":"Dowóz"},{"id":"COMPLETED","name":"Zakończone"},{"id":"CANCELED","name":"Anulowane"}]
+				"headers": {
+					"Accept": "application/json, text/plain, */*",
+					"Sec-Fetch-Dest": "empty",
+					"X-Requested-With": "XMLHttpRequest",
+					"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"
+				}
+			}
+		}];
+		res = http.batch(req);
+		sleep(9.22);
+		req = [{
+			"method": "put",
+			"url": "http://localhost:8080/api/orders/5e60cdf82732740d704609a9",
+			"body": "{\"id\":\"5e60cdf82732740d704609a9\",\"items\":[{\"product\":{\"id\":\"5e60cdf82732740d704609a2\",\"name\":\"Testowy produkt 1\",\"category\":{\"id\":\"5e60cdf82732740d70460993\",\"name\":\"Test 1\"},\"company\":\"TEST\",\"description\":null,\"price\":1,\"expirationDate\":null},\"quantity\":1,\"id\":1},{\"product\":{\"id\":\"5e60cdf82732740d704609a4\",\"name\":\"Testowy produkt 3\",\"category\":{\"id\":\"5e60cdf82732740d70460994\",\"name\":\"Test 2\"},\"company\":\"TEST\",\"description\":null,\"price\":4,\"expirationDate\":null},\"quantity\":3,\"id\":2},{\"product\":{\"id\":\"5e60cdf82732740d704609a6\",\"name\":\"Testowy produkt 5\",\"category\":{\"id\":\"5e60cdf82732740d70460994\",\"name\":\"Test 2\"},\"company\":\"TEST\",\"description\":null,\"price\":16,\"expirationDate\":null},\"quantity\":5,\"id\":3}],\"client\":{\"id\":\"5e60cdf82732740d70460990\",\"name\":\"Client Test 1\"},\"orderDate\":\"2020-03-05 11:01:28\",\"completeDate\":null,\"status\":\"ACCEPTED\",\"confirmationDate\":\"2020-03-05 11:01:28\"}",
+			"params": {
+				"headers": {
+					"Accept": "application/json, text/plain, */*",
+					"Sec-Fetch-Dest": "empty",
+					"X-Requested-With": "XMLHttpRequest",
+					"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36",
+					"Content-Type": "application/json;charset=UTF-8"
+				}
+			}
+		},{
+			"method": "get",
+			"url": "http://localhost:8080/api/select/statuses",
+			"params": {[{"id":"DRAFT","name":"Robocze"},{"id":"ACCEPTED","name":"Zaakceptowane"},{"id":"SEND_TO_PACKING","name":"Wysłane do pakowania"},{"id":"DELIVERY","name":"Dowóz"},{"id":"COMPLETED","name":"Zakończone"},{"id":"CANCELED","name":"Anulowane"}]
+				"headers": {
+					"Accept": "application/json, text/plain, */*",
+					"Sec-Fetch-Dest": "empty",
+					"X-Requested-With": "XMLHttpRequest",
+					"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"
+				}
+			}
+		},{
+			"method": "get",
+			"url": "http://localhost:8080/api/orders/?page=0&size=10",
+			"params": {{"content":[{"id":"5e60cdf82732740d704609a7","items":[{"product":{"id":"5e60cdf82732740d704609a2","name":"Testowy produkt 1","category":{"id":"5e60cdf82732740d70460993","name":"Test 1"},"company":"TEST","description":null,"price":1.0,"expirationDate":null},"quantity":10},{"product":{"id":"5e60cdf82732740d704609a3","name":"Testowy produkt 2","category":{"id":"5e60cdf82732740d70460993","name":"Test 1"},"company":"TEST","description":null,"price":2.0,"expirationDate":null},"quantity":17}],"client":{"id":"5e60cdf82732740d70460990","username":"client","lastName":"Test 1","firstName":"Client","street":null,"homeNo":0,"flatNo":0,"city":null,"zipCode":0,"role":"CLIENT"},"orderDate":"2020-03-05 11:01:28","completeDate":null,"status":"COMPLETED"},{"id":"5e60cdf82732740d704609a8","items":[{"product":{"id":"5e60cdf82732740d704609a4","name":"Testowy produkt 3","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":4.0,"expirationDate":null},"quantity":1},{"product":{"id":"5e60cdf82732740d704609a5","name":"Testowy produkt 4","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":8.0,"expirationDate":null},"quantity":10},{"product":{"id":"5e60cdf82732740d704609a6","name":"Testowy produkt 5","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":16.0,"expirationDate":null},"quantity":100}],"client":{"id":"5e60cdf82732740d70460990","username":"client","lastName":"Test 1","firstName":"Client","street":null,"homeNo":0,"flatNo":0,"city":null,"zipCode":0,"role":"CLIENT"},"orderDate":"2020-03-05 11:01:28","completeDate":null,"status":"ACCEPTED"},{"id":"5e60cdf82732740d704609a9","items":[{"product":{"id":"5e60cdf82732740d704609a2","name":"Testowy produkt 1","category":{"id":"5e60cdf82732740d70460993","name":"Test 1"},"company":"TEST","description":null,"price":1.0,"expirationDate":null},"quantity":1},{"product":{"id":"5e60cdf82732740d704609a4","name":"Testowy produkt 3","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":4.0,"expirationDate":null},"quantity":3},{"product":{"id":"5e60cdf82732740d704609a6","name":"Testowy produkt 5","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":16.0,"expirationDate":null},"quantity":5}],"client":{"id":"5e60cdf82732740d70460990","username":"client","lastName":"Test 1","firstName":"Client","street":null,"homeNo":0,"flatNo":0,"city":null,"zipCode":0,"role":"CLIENT"},"orderDate":"2020-03-05 11:01:28","completeDate":null,"status":"ACCEPTED"},{"id":"5e6113de2732740d704609aa","items":[{"product":{"id":"5e60cdf82732740d704609a4","name":"Testowy produkt 3","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":4.0,"expirationDate":null},"quantity":1},{"product":{"id":"5e60cdf82732740d704609a5","name":"Testowy produkt 4","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":8.0,"expirationDate":null},"quantity":1}],"client":{"id":"5e60cdf82732740d70460990","username":"client","lastName":"Test 1","firstName":"Client","street":null,"homeNo":0,"flatNo":0,"city":null,"zipCode":0,"role":"CLIENT"},"orderDate":"2020-03-05 15:59:42","completeDate":null,"status":"ACCEPTED"},{"id":"5e6114fa2732740d704609ab","items":[{"product":{"id":"5e60cdf82732740d704609a6","name":"Testowy produkt 5","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":16.0,"expirationDate":null},"quantity":1},{"product":{"id":"5e60cdf82732740d704609a6","name":"Testowy produkt 5","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":16.0,"expirationDate":null},"quantity":1}],"client":{"id":"5e60cdf82732740d70460990","username":"client","lastName":"Test 1","firstName":"Client","street":null,"homeNo":0,"flatNo":0,"city":null,"zipCode":0,"role":"CLIENT"},"orderDate":"2020-03-05 16:04:26","completeDate":null,"status":"DELIVERY"},{"id":"5e6165c12732740d704609ac","items":[{"product":{"id":"5e60cdf82732740d704609a3","name":"Testowy produkt 2","category":{"id":"5e60cdf82732740d70460993","name":"Test 1"},"company":"TEST","description":null,"price":2.0,"expirationDate":null},"quantity":1},{"product":{"id":"5e60cdf82732740d704609a6","name":"Testowy produkt 5","category":{"id":"5e60cdf82732740d70460994","name":"Test 2"},"company":"TEST","description":null,"price":16.0,"expirationDate":null},"quantity":1}],"client":{"id":"5e60cdf82732740d70460990","username":"client","lastName":"Test 1","firstName":"Client","street":null,"homeNo":0,"flatNo":0,"city":null,"zipCode":0,"role":"CLIENT"},"orderDate":"2020-03-05 21:49:05","completeDate":null,"status":"DRAFT"}],"totalElements":6,"totalPages":1,"last":true,"size":10,"number":0,"sort":null,"first":true,"numberOfElements":6}
+				"headers": {
+					"Accept": "application/json, text/plain, */*",
+					"Sec-Fetch-Dest": "empty",
+					"X-Requested-With": "XMLHttpRequest",
+					"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"
+				}
+			}
+		}];
+		res = http.batch(req);
+		// Random sleep between 5s and 10s
+		sleep(Math.floor(Math.random()*5+5));
+	});
+
+}
